@@ -11,9 +11,25 @@ class BurcDetay extends StatefulWidget {
 }
 
 class _BurcDetayState extends State<BurcDetay> {
-  Color appBarRengi = Colors.pink;
+  Color appBarRengi = Colors.transparent;
 
   late PaletteGenerator _generator;
+
+  @override
+  void initState() {
+    super.initState();
+    appBarRenginiBul();
+  }
+
+  void appBarRenginiBul() async {
+    _generator = await PaletteGenerator.fromImageProvider(
+      AssetImage("resimler/${widget.secilenBurc.burcBuyukResim}"),
+    );
+    setState(() {
+      appBarRengi = _generator.vibrantColor!.color;
+    });
+    print(appBarRengi);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +37,7 @@ class _BurcDetayState extends State<BurcDetay> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            backgroundColor: appBarRengi,
             expandedHeight: 250,
             pinned: false,
             //snap: true,
